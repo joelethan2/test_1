@@ -8,7 +8,7 @@ install:
 
 script:
   - pytest
-  - nosetests -v --with-coverage --create_app
+  - nosetests -v --with-coverage --api
  
 after_success:
 
