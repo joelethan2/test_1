@@ -4,4 +4,4 @@ python:
 install:
   - pip install unittest2
 script:
-  -pytest
+  - test_api.py
