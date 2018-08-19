@@ -21,12 +21,12 @@ def create_app(config_name):
         return 'Welcome to challenge_2'
 
     ### GET all questions#
-    @app.route('/questions/')
+    @app.route('/questionz')
     def get_questions():
         return jsonify({'questions': questions})
 
     ### GET a question/qnid_number#
-    @app.route('/questions/<int:qn_id>/')
+    @app.route('/questionz/<int:qn_id>')
     def get_a_question(qn_id):
         question={}
         for item in questions:
@@ -40,7 +40,7 @@ def create_app(config_name):
         return jsonify(question)
 
     ###POST a question#
-    @app.route('/questions/', methods=['POST'])
+    @app.route('/questionz', methods=['POST'])
     def add_question():
         request_data = request.get_json()
         if (valid_question(request_data)):
@@ -67,7 +67,7 @@ def create_app(config_name):
 
 
     ###POST an answer
-    @app.route('/questions/<int:qn_id>/answers', methods=['POST'])
+    @app.route('/questionz/<int:qn_id>/answers', methods=['POST'])
     def add_ans(qn_id):
 
         request_ans = request.json
@@ -88,8 +88,8 @@ def create_app(config_name):
 
 
 
-    # # PATCH /questions/qnid_number
-    # @app.route('/questions/<int:qn_id>/', methods=['PATCH'])
+    # # PATCH /questionz/qnid_number
+    # @app.route('/questionz/<int:qn_id>/', methods=['PATCH'])
     # def update_question(qn_id):
     #     request_data = request.get_json()
     #     updated_question={}
@@ -109,7 +109,7 @@ def create_app(config_name):
 
 
     # # GET all answers to a questions
-    # @app.route('/questions/<int:qn_id>/answers')
+    # @app.route('/questionz/<int:qn_id>/answers')
     # def get_answers(qn_id):
     #     question={}
     #     for item in questions:
