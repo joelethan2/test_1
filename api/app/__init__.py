@@ -83,41 +83,41 @@ def create_app(config_name):
                 }
 
                 questions[questions.index(yr)]['answer'].append(ans)
-                return jsonify(questions[questions.index(yr)]['answer'])
+                return jsonify(ans)
 
 
 
 
-    # PATCH /questions/qnid_number
-    @app.route('/questions/<int:qn_id>/', methods=['PATCH'])
-    def update_question(qn_id):
-        request_data = request.get_json()
-        updated_question={}
+    # # PATCH /questions/qnid_number
+    # @app.route('/questions/<int:qn_id>/', methods=['PATCH'])
+    # def update_question(qn_id):
+    #     request_data = request.get_json()
+    #     updated_question={}
 
-        if ("qn" in request_data):
-            updated_question["qn"]=request_data["qn"]
+    #     if ("qn" in request_data):
+    #         updated_question["qn"]=request_data["qn"]
         
-        if("aurthor" in request_data):
-            updated_question["aurthor"]=request_data["aurthor"]
+    #     if("aurthor" in request_data):
+    #         updated_question["aurthor"]=request_data["aurthor"]
         
-        for question in questions:
-            if question["qn_id"]==qn_id:
-                question.update(updated_question)
-        response = Response("", status="204")
-        response.headers['location']="/question/" + str(qn_id)
-        return response
+    #     for question in questions:
+    #         if question["qn_id"]==qn_id:
+    #             question.update(updated_question)
+    #     response = Response("", status="204")
+    #     response.headers['location']="/question/" + str(qn_id)
+    #     return response
 
 
-    # GET all answers to a questions
-    @app.route('/questions/<int:qn_id>/answers')
-    def get_answers(qn_id):
-        question={}
-        for item in questions:
-            if qn_id==item['qn_id']:
-                question={
-                    'answer':item['answer']
-                }
-        return 'GET-method ........ Under development, try POST'#jsonify(questions['answer'])
+    # # GET all answers to a questions
+    # @app.route('/questions/<int:qn_id>/answers')
+    # def get_answers(qn_id):
+    #     question={}
+    #     for item in questions:
+    #         if qn_id==item['qn_id']:
+    #             question={
+    #                 'answer':item['answer']
+    #             }
+    #     return 'GET-method ........ Under development, try POST'#jsonify(questions['answer'])
 
 
     def valid_question(questionObject):
