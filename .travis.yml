@@ -8,7 +8,7 @@ install:
 
 script:
   - pytest -v --cov api/app --cov-report term-missing
-  - nosetests -v --with-coverage --api
+  - nosetests -v --with-coverage --api/app
  
 after_success:
 
