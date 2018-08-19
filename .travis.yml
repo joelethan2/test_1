@@ -7,10 +7,9 @@ install:
   - pip install coveralls
 
 script:
-  - pytest
+  - pytest -v --cov api/app --cov-report term-missing
   - nosetests -v --with-coverage --api
  
 after_success:
 
   - coveralls
-  - codeclimate-test-reporter
