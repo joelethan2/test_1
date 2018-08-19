@@ -4,8 +4,13 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 
 script:
   - pytest
+  - nosetests -v --with-coverage --create_app
+ 
 after_success:
+
+  - coveralls
   - codeclimate-test-reporter
