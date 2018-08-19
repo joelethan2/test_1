@@ -1,6 +1,6 @@
 language: python
 python:
-  - "stable"
+  - 2.7
 install:
   - pip install unittest2
 script: python test_api.py
