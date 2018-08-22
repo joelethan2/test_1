@@ -23,7 +23,6 @@ class APITestCase(unittest.TestCase):
                     }
 
 
-
     def test_questeion_has_id(self):
         post_resp = self.client().post('/questionz', 
                     data=json.dumps(self.test_qn),content_type='application/json')
@@ -66,7 +65,17 @@ class APITestCase(unittest.TestCase):
         data=json.loads(post_resp.get_data(as_text=True))
         self.assertEqual(post_resp.status_code, 200)
         self.assertNotEqual(data['aurthor'].strip(), '')
-    
+
+    def test_get_a_question(self):
+        post_resp = self.client().post('/questionz/122/answers', data=json.dumps(self.test_ans),content_type='application/json')
+        data=json.loads(post_resp.get_data(as_text=True))
+        self.assertEqual(post_resp.status_code, 200)
+        get_resp = self.client().get('questionz/12')
+        self.assertEqual(get_resp.status_code, 200)
+
+
+        
+
 
 if __name__=="__main__":
     unittest.main()
