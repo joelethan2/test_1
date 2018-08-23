@@ -6,8 +6,8 @@ class Answer:
         self.qn_id=qn_id
         self.answer=answer
         self.author=author
-        self.voteup=voteup
-        self.votedown=votedown
+        self.vote=voteup-votedown
+        
 
     def return_qn_id(self):
         return self.qn_id
@@ -19,4 +19,4 @@ class Answer:
         return self.author
 
     def return_votes(self):
-        return self.voteup-self.votedown
+        return self.vote
