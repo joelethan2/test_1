@@ -4,7 +4,7 @@
 
 class Question:
 
-    def __init__(self, qn, qn_id, author):
+    def __init__(self, qn_id, qn, author):
         self.qn_id=qn_id
         self.qn=qn
         self.author=author
