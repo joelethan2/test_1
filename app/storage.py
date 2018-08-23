@@ -1,27 +1,38 @@
 
-from app import Question, Answer
+from app.Question import Question
+from app.Answer import  Answer
 
-questions={}
+class Store:
+    def __init__(self):
+        self.qns=[]
 
-def add_Questiion(new_qn):
-    if isinstance(new_qn, Question):
-        qns_pos=len(questions) + 1
-        questions[qns_pos]=new_qn.__dict__
-        return questions[qns_pos]
-    raise TypeError('Invalid Question, please try again')
+    def get_all_questions(self):
+        return self.qns
 
-def return_questions():
-    return questions
 
-def return_a_question(qn_id):
-    if qn_id in questions:
-        return questions[qn_id]
+    def add_a_questiion(self, new_qn):
+        if isinstance(new_qn, Question):
+            qns_pos=len(self.qns) + 1
+            self.qns[qns_pos]=new_qn
+            return self.qns[qns_pos]
+        raise TypeError('Invalid Question, please try again')
 
-def add_an_answer(new_ans):
-    if not isinstance(new_ans, Answer):
-        TypeError('Please enter a valid answer')
 
-    if new_ans.qn_id in questions:
-        question = questions[new_ans.qn_id]
-        question['answer'].append(new_ans)
-        return  questions[new_ans.qn_id]
+
+
+    def return_a_question(self, qn_id):
+        if qn_id in self.qns:
+            return self.qns[qn_id]
+
+
+    
+    def add_an_answer(self, new_ans):
+        if isinstance(new_ans, Answer):
+            if new_ans.qn_id in self.qns:
+                question = self.qns[new_ans.qn_id]
+                question['answer'].append(new_ans)
+                return  self.qns[new_ans.qn_id]
+
+        raise TypeError('Please enter a valid answer')
+
+    
