@@ -9,9 +9,6 @@ install:
 
 script:
   - pytest
-  - python -m pytest -v --cov tests --cov-report term-missing
-  - pytest -v --cov tests --cov-report term-missing
-  - nosetests -v --with-coverage --tests
 after_success:
   - coveralls
 deploy:
