@@ -1,6 +1,6 @@
 import os
 
-from app.routes import app
+from app.Routes import app
 
 
 
