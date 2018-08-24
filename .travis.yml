@@ -4,6 +4,13 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install nose
 
 script:
   - pytest
+after_success:
+  - coveralls
+deploy:
+  provider: heroku
+  api_key:
