@@ -1,52 +1,89 @@
 
-from flask import Flask, jsonify, request,Response, json
-from flask_api import FlaskAPI
-from app.Answer import Answer
+from flask import Flask, request, jsonify
 from app.Question import Question
+from app.Answer import Answer
 from app.Storage import Store
 
-from instance.config import app_config
-
-config_name = "development"
-
-app = FlaskAPI(__name__)
+app = Flask(__name__)
 store = Store()
 
+
 @app.route('/')
-def hello_world():
-    return 'Welcome to challenge_2'
+def index():
+	return '<h1 style="text-align:center;">Welcome to challenge_2</h1>'
+	
+	
+#POST a question
+@app.route('/v1/questions', methods=['POST'])
+def add_a_questions():
 
-#Post a question
-@app.route('/questions', methods=['POST'])
-def add_question():
-    if request.form['author']:
-        if request.form['qn']:
-            new_qn=Question(2, request.form['qn'], request.form['author'])
-            response = jsonify(store.add_a_questiion(new_qn))
-            response.status_code=201
-            return response
-
-        response = jsonify({'error':'Question field not entered'})
+    if not request.form['user']:
+        response = jsonify( {'error': 'User field  is empty'} )
         response.status_code = 400
         return response
 
-    response = jsonify({'error':'Author field not entered'})
-    response.status_code = 400
-    return response
-
-@app.route('/questions')
-def get_questions():
-    response = jsonify(store.get_all_questions())
-    response.status_code=200
-    return response
-
-@app.route('/questions/<int:qn_id>')
-def get_a_question(qn_id):
-    if store.return_a_question(qn_id):
-        response = jsonify(store.return_a_question(qn_id))
-        response.status_code=200
+    if not request.form['qn']:
+        response = jsonify( {'error': 'Question field is empty'} )
+        response.status_code = 400
         return response
 
-    response = jsonify({'error':'Question not found'})
-    response.status_code=404
+    new_qn = Question(2, request.form['qn'], request.form['user'])
+    response = jsonify(store.add_question(new_qn))
+    response.status_code = 201
     return response
+
+
+
+
+#GET all questions
+@app.route('/v1/questions')
+def get_questions():
+
+    output = store.return_questions()
+    response = jsonify(output)
+    response.status_code = 200
+    return response
+
+
+#GET a question
+@app.route('/v1/questions/<int:qn_id>/')
+def get_a_question(qn_id):
+   
+    if store.return_a_question(qn_id) :
+        response = jsonify(store.return_a_question(qn_id))
+        response.status_code = 200
+        return response
+
+    output = { 'error':  request.url+ ':- has no Question.' }
+    response = jsonify(output)
+    response.status_code = 404
+    return response
+
+
+#add answer to question
+@app.route('/v1/questions/<int:qn_id>/answers', methods=['POST'])
+def answer_a_question(qn_id):
+    if not request.form['user'] :
+        response = jsonify({'error': 'User field  is empty'})
+        response.status_code = 400
+        return response
+        
+    if  not request.form['answer']:
+        response = jsonify({'error': 'Answer field is empty'})
+        response.status_code = 400
+        return response
+
+
+    new_ans = Answer(qn_id, request.form['answer'], request.form['user'])
+    store_resp=store.add_answer(new_ans)
+    if  store_resp:
+        response = jsonify(store_resp)
+        response.status_code = 200
+        return response
+
+    response = jsonify({ 'error':  request.url+ ': has no Question.' })
+    response.status_code = 404
+    return response
+
+
+
